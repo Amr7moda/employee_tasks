@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+Route::get('/')->middleware('auth');
 
 // create route to show the create project form
 Route::get('/project', [App\Http\Controllers\ProjectController::class, 'create_project'])->name('create_project')->middleware('auth');

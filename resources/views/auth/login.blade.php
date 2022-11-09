@@ -49,6 +49,12 @@
                 <x-primary-button class="ml-3">
                     {{ __('Log in') }}
                 </x-primary-button>
+
+                <button class="ml-3">
+                    <a class="nav-link" href="{{ route('register') }}"
+                        class="ml-4 text-sm text-gray-700 dark:text-gray-500 underline">Register</a>
+                </button>
+
             </div>
         </form>
     </x-auth-card>

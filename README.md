@@ -64,3 +64,21 @@ If you discover a security vulnerability within Laravel, please send an e-mail t
 ## License
 
 The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+
+
+
+## USE
+
+1) create database named fullstack_task
+2) Run php artisan migrate 
+
+* To create an admin please :
+1) go to .env and update {
+    ADMIN_NAME -> line 61
+    ADMIN_EMAIL -> line 62
+    ADMIN_PASSWORD -> line 63
+}
+
+2) run command php artisan db:seed --force
+
+3) run command php artisan serve and login as admin
