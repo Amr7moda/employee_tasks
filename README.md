@@ -69,7 +69,7 @@ The Laravel framework is open-sourced software licensed under the [MIT license](
 
 ## USE
 
-1) create database named fullstack_task
+1) Create database named fullstack_task
 2) Run php artisan migrate 
 
 * To create an admin please :
