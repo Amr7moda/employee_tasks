@@ -7,6 +7,7 @@ use App\Models\Task;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class TaskController extends Controller
 {
@@ -40,16 +41,21 @@ class TaskController extends Controller
     {
         //get task data from databse
         $tasks = Task::with('project', 'user')->get();
-
         return view('task/show_tasks', ["tasks" => $tasks]);
     }
 
+    public function all_tasks()
+    {
+        //get tasks from database
+        $tasks = Task::with('project', 'user')->get();
+        return view('task/all_tasks', ["tasks" => $tasks]);
+    }
 
-    public function submit_task(Request $request)
+    public function submit_task(Request $request,$id)
     {
         //get submited task data and save it to database
-        $task = Task::find($request->id);
-        $task->details = $request->get('details');
+        $task = Task::find($id);
+        $task->details = $request->details;
         $task->submit = true;
         $task->save();
 
@@ -67,5 +73,46 @@ class TaskController extends Controller
         $projects = Project::get();
 
         return view('project/show_projects', ["projects" => $projects], ["tasks" => $tasks]);
+    }
+
+    public function update_task(Request $request)
+    {
+        $id = $request->id;
+
+        $tasks = DB::table('tasks')
+            ->join('projects', 'projects.id', '=', 'tasks.project_id')
+            ->join('users', 'users.id', '=', 'tasks.user_id')
+            ->select('tasks.*', 'projects.P_name', 'users.email')
+            ->where('tasks.id', $id)
+            ->get();
+
+        //get tasks from database
+        $users = User::get();
+        return response()->json([
+            'message' => 'Called successfully.',
+            'data' => $tasks
+        ],);
+    }
+
+    public function new_update_task(Request $request)
+    {
+        $userid = $request->user_id;
+        $taskid = $request->task_id;
+        $request->validate([
+            'email' => ['string', 'email', 'unique:users,email,'.$userid]
+        ]);
+
+
+        $task = Task::find($taskid);
+        $task->task_name = $request->task_name;
+        $task->submit = $request->status;
+        $task->details = $request->details;
+        $task->update();
+
+        $user = User::find($userid);
+        $user->email = $request->email;
+        $user->update();
+
+        return redirect()->back()->with('status', 'Employee Updated successfully.');
     }
 }

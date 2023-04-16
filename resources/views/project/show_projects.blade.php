@@ -10,6 +10,7 @@
             <div class="accordion" id="accordionExample">
                 {{-- display all projects --}}
                 @foreach ($projects as $index => $project)
+
                     <div class="accordion-item">
                         <h2 class="accordion-header" id="headingOne">
                             <button class="accordion-button" type="button" data-bs-toggle="collapse"
@@ -38,7 +39,6 @@
                                                             class="btn m-4 btn-danger">Delete
                                                             Task!</button></a>
                                                 @endif
-
                                             </div>
 
                                             {{-- condition to show images to submited tasks  --}}
@@ -53,7 +53,7 @@
                                 @endforeach
 
                                 {{-- condition to show delete & create tasks buttons to admins only  --}}
-                                @if (Auth::user()->is_admin == true)
+                                @if (Auth::user()->role == 'admin')
                                     <a href="{{ route('create_task') }}"><button class="btn m-2 btn-primary">Craete
                                             Task!</button></a>
                                     <a href="{{ route('delete_project', $project['id']) }}"><button

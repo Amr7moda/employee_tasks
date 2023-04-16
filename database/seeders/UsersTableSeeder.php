@@ -21,7 +21,7 @@ class UsersTableSeeder extends Seeder
                 [
                     'name' => config('admin.admin_name'),
                     'password' => bcrypt(config('admin.admin_password')),
-                    'is_admin' => true,
+                    'role' => 'admin',
                 ]
             );
         }

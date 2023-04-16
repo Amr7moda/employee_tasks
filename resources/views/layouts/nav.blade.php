@@ -20,32 +20,55 @@
     <nav class="navbar navbar-expand-lg bg-light">
         <div class="container-fluid">
             <a class="navbar-brand" href="#">
-                <img src="https://www.rc.virginia.edu/images/accord/project.png" width="100px" class="rounded-circle"  alt="">
+                <img src="https://www.rc.virginia.edu/images/accord/project.png" width="100px" class="rounded-circle"
+                    alt="">
             </a>
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
                 aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
+
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav">
-                    <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="{{ route('show_projects') }}">Show
-                            Projects</a>
-                    </li>
-                    @if (Auth::user()->is_admin == true)
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="{{ route('create_project') }}">Create
-                                Project</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="nav-link active" aria-current="page" href="{{ route('create_task') }}">Create
-                                Task</a>
-                        </li>
-                    @endif
+
                     <li class="nav-item">
                         <a class="nav-link active" aria-current="page" href="{{ route('show_task') }}">My
                             Tasks</a>
                     </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{{ route('show_projects') }}">Show
+                            Projects</a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="{{ route('create_task') }}">Create
+                            Task</a>
+                    </li>
+
+                    @if (Auth::user()->role == 'admin')
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="{{ route('create_project') }}">Create
+                                Project</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="{{ route('create_user') }}">Create
+                                User</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="{{ route('show_users') }}">Show
+                                Users</a>
+                        </li>
+
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="{{ route('all_tasks') }}">Show
+                                Tasks</a>
+                        </li>
+                    @endif
+
+
                 </ul>
 
                 <ul class="navbar-nav ms-5">
@@ -87,4 +110,8 @@
     @yield('body')
 
 
+    <script src="{{ asset('task.js') }}"></script>
+    <script src="{{ asset('user.js') }}"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/1.3.5/axios.min.js"></script>
     {{-- @extends('layouts.footer') --}}

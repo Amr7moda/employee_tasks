@@ -38,20 +38,20 @@ class ProjectController extends Controller
     }
 
 
-    public function show_projects(Request $request)
+    public function show_projects()
     {
         //get project from database
         $projects = Project::get();
 
         //get the tasks data with related data from project and user table
         $tasks = Task::with('project', 'user')->get();
-
         return view('project/show_projects', ["projects" => $projects], ["tasks" => $tasks]);
     }
 
 
     public function delete_project($id)
     {
+        
         //get selected project from database to delete
         $task = DB::table('tasks')
             ->where('project_id', '=', $id)

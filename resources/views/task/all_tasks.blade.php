@@ -1,13 +1,10 @@
 @extends('layouts.nav')
 
 @section('title')
-    <title>Show Tasks</title>
+    <title>Show Users</title>
 @endsection
 
-
 @section('body')
-    {{-- {{dd($tasks)}} --}}
-    <h1 class="m-3 text-center">Submit Your Tasks!</h1>
 
     @if (session('status'))
         <div id="success" class="alert alert-success">{{ session('status') }}</div>
@@ -23,36 +20,51 @@
         </div>
     @endif
 
-    <div class="container w-50">
-        <div class="row ms-5">
-            @foreach ($tasks as $task)
-                @if (Auth::user()->id == $task->user_id)
-                    @if ($task->submit == false)
-                        <div class="col-10 shadow border p-5 mt-5">
-                            <h1>{{ $task->project->P_name }}</h1>
-                            <h3>{{ $task->task_name }}</h3>
-                            <div>
-                                <div class="mb-3 ">
-                                    <label for="details" class="form-label">Task Details</label>
-                                    <input type="text" class="form-control" name="details" id="details"
-                                        value="{{ $task->details }}">
-                                    <input type="text" hidden name="id" value="{{ $task->id }}">
-                                </div>
-                                <a href="{{ route('delete_task', $task->id) }}"> <button type="submit"
-                                        class="btn btn-danger">Delete</button> </a>
+    <div class="container mt-5">
+        <div class="row">
+            <table class="table">
+                <thead>
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col">Task Name</th>
+                        <th scope="col">Project Name</th>
+                        <th scope="col">Employee Works on</th>
+                        <th scope="col">Status</th>
+                        <th scope="col">details</th>
+                        <th scope="col">action</th>
 
-                                <a href="{{ route('submit_task', $task->id) }}"> <button type="submit"
-                                        class="btn btn-success  ">Submit</button></a>
+                    </tr>
+                </thead>
+                <tbody>
+                    {{-- display all users --}}
+                    @foreach ($tasks as $index => $task)
+                        <tr>
+                            <th scope="row">{{ $index + 1 }}</th>
+                            <td>{{ $task->task_name }}</td>
+                            <td>{{ $task->project->P_name }}</td>
+                            <td>{{ $task->user->name }}</td>
+                            @if ($task->submit == 0)
+                                <td>Active</td>
+                            @else
+                                <td>Finished</td>
+                            @endif
+                            <td>{{ $task->details }}</td>
 
-                                <button type="submit" id="update" value="{{ $task->id }}"
-                                    class="btn btn-primary">Update</button>
-                            </div>
-                        </div>
-                    @endif
-                @endif
-            @endforeach
+                            <td>
+                                <a href="{{ route('delete_task', $task->id) }}"> <button id="{{ $task->id }}"
+                                        class="btn btn-danger"> Delete </button></a>
+                                <button value="{{ $task->id }}" id="update" class="btn btn-success"> Update
+                                </button>
+                            </td>
+                        </tr>
+                    @endforeach
+                </tbody>
+            </table>
+
+
         </div>
     </div>
+
 
 
     <!-- Button trigger modal -->
